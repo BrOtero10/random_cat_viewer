@@ -5,8 +5,6 @@ from api import CatImage, get_random_cat_image
 
 def main(page: ft.Page):
     page.title = "Random Cat Viewer"
-    page.window.width = 5000
-    page.window.height = 5000
     page.window.maximized = True
     page.bgcolor = "#003265"
 
@@ -138,15 +136,24 @@ def main(page: ft.Page):
                     expand=True, # Expande a imagem para preencher o ft.Stack
                     width=page.window.width,
                     height=page.window.height,
-                    opacity=0.4
+                    opacity=0.4,
                 ),
-                ft.SafeArea(
-                    ft.Container(
-                        content=cat_image,
-                        alignment=ft.alignment.center,
-                    ),
+                ft.Column(
+                    [
+                        ft.SafeArea(
+                            ft.Container(
+                                content=cat_image,
+                                alignment=ft.alignment.center,
+                                expand=True
+                            ),
+                            expand=True,
+                        ),
+                    ],
                     expand=True,
-                ),
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                )
+                
             ],
             expand=True, # Expande o ft.Stack para preencher página inteira
         )
