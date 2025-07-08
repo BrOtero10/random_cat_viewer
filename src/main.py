@@ -21,6 +21,12 @@ def main(page: ft.Page):
         on_dismiss=lambda e: print("Fechou")
     )
 
+    copied_snackbar =  ft.SnackBar(
+                            content=ft.Text("Link copiado!", color=ft.Colors.WHITE),
+                            bgcolor=ft.Colors.GREEN,
+                            duration=1500
+                        )
+
     def show_history(e=None):
         history_dlg.content = ft.Container(
             content=ft.Column(
@@ -46,6 +52,11 @@ def main(page: ft.Page):
         page.update()
         page.open(history_dlg)
 
+    def copy_image_from_preview(e, url: str):
+        pyperclip.copy(url)
+        page.open(copied_snackbar)
+        page.update()
+
     def show_big_image(e, url: str):
         preview_dialog = ft.AlertDialog(
             modal=True,
@@ -53,7 +64,7 @@ def main(page: ft.Page):
             actions=[
                 ft.Row(
                     controls=[
-                        ft.IconButton(icon=ft.Icons.COPY, on_click=lambda e: pyperclip.copy(url)),
+                        ft.IconButton(icon=ft.Icons.COPY, on_click=lambda e: copy_image_from_preview(e, url)),
                         ft.Container(expand=True),
                         ft.TextButton("Voltar", on_click=lambda e: page.open(history_dlg)),
                     ],
@@ -67,6 +78,8 @@ def main(page: ft.Page):
     def copy_cat_image_src(e=None):
         nonlocal cat_image
         pyperclip.copy(cat_image.src)
+        page.open(copied_snackbar)
+        page.update()
 
     def update_cat_image(e=None):
         nonlocal cat_image
