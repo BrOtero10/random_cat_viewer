@@ -5,8 +5,10 @@ from api import CatImage, get_random_cat_image
 
 def main(page: ft.Page):
     page.title = "Random Cat Viewer"
-    page.window_width = 1200
-    page.window_height = 900
+    page.window.width = 5000
+    page.window.height = 5000
+    page.window.maximized = True
+    page.bgcolor = "#003265"
 
     image_history: list[CatImage] = []
 
@@ -128,13 +130,27 @@ def main(page: ft.Page):
     )
 
     page.add(
-        ft.SafeArea(
-            ft.Container(
-                content=cat_image,
-                alignment=ft.alignment.center,
-            ),
-            expand=True,
+        ft.Stack(
+            [
+                ft.Image(
+                    src="/nyan_cat.gif",
+                    fit=ft.ImageFit.COVER, # Cobrir toda a área disponível
+                    expand=True, # Expande a imagem para preencher o ft.Stack
+                    width=page.window.width,
+                    height=page.window.height,
+                    opacity=0.4
+                ),
+                ft.SafeArea(
+                    ft.Container(
+                        content=cat_image,
+                        alignment=ft.alignment.center,
+                    ),
+                    expand=True,
+                ),
+            ],
+            expand=True, # Expande o ft.Stack para preencher página inteira
         )
+        
     )
 
-ft.app(main)
+ft.app(target=main, assets_dir="assets")
