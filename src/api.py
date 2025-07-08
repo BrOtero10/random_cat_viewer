@@ -35,8 +35,7 @@ def get_random_cat_image() -> Optional[CatImage]:
     try:
         response = requests.get(url, timeout=5)
         response.raise_for_status() # lança erro se o status != 200
-
-        data = response.json()[0]
+        data = response.json()
 
         if isinstance(data, list) and len(data) > 0:
             cat_data = data[0]
@@ -49,3 +48,6 @@ def get_random_cat_image() -> Optional[CatImage]:
     except Exception as e:
         print("Erro: ", e)
     return None # em caso de erro
+
+if __name__ == "__main__":
+    print(get_random_cat_image())
